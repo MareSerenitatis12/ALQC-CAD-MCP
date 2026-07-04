@@ -1,0 +1,7 @@
+name: base
+channels:
+  - conda-forge
+dependencies:
+  # Not used by the python:3.11-slim Dockerfile — kept for reference
+  # All packages installed via pip + apt in Dockerfile
+  - python=3.11

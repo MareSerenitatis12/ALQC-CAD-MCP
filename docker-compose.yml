@@ -1,0 +1,38 @@
+services:
+  cadquery-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cadquery-mcp:latest
+    container_name: cadquery-http-server
+    restart: unless-stopped
+    ports:
+      - "8012:8012"
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8012"
+      PYTHONUNBUFFERED: "1"
+      CAD_OUTPUT_DIR: "/app/cad_output"
+    volumes:
+      - ./cad_output:/app/cad_output
+    command:
+      - supergateway
+      - --stdio
+      - python /app/cadquery_mcp.py
+      - --outputTransport
+      - streamableHttp
+      - --streamableHttpPath
+      - /mcp
+      - --port
+      - "8012"
+      - --host
+      - 0.0.0.0
+      - --cors
+      - --healthEndpoint
+      - /health
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8012/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
