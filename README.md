@@ -129,12 +129,8 @@ Supported export formats: `.step`, `.stl`, `.obj`, `.ply`, `.glb`, `.off`, `.3mf
 
 ## Deploying to Remote Machine
 
-```bash
-# 1. Push files to remote VPS
-rsync -avz --progress ./ avhea@10.10.1.11:~/cadquery-mcp/
 
-# 2. SSH in and rebuild
-ssh avhea@10.10.1.11
+# build
 cd ~/cadquery-mcp
 docker compose up -d --build
 
